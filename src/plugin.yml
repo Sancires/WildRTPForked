@@ -1,0 +1,8 @@
+main: lasajoni.main.Main
+name: WildRTP
+version: 1.0
+author: LasaJoni
+commands:
+ wild:
+  description: Random Teleport
+  aliases: [wilderness, rtp, randomtp, randomteleport]
