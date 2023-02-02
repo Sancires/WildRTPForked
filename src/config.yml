@@ -1,0 +1,19 @@
+# Config for WildRTP
+# cooldown in ms
+# When permission.teleport: "NONE", no permission is set for the teleport
+teleport:
+  max-x: 2500
+  max-y: 2500
+  cooldown: 0
+
+permission:
+  teleport: "NONE"
+  bypass-cooldown: "wildrtp.bypass"
+  reload: "wildrtp.reload"
+
+plugin-settings:
+  prefix: "[§2WildRTP§f] §6"
+
+disabled-worlds:
+  #example_world_name: "example_world_name"
+  #world_the_end: "world_the_end"
