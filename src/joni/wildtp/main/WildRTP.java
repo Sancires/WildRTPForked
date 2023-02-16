@@ -11,12 +11,15 @@ public class WildRTP extends JavaPlugin {
 
 	public static String name = "WildRTP";
 	public static String author = "Joni";
-	public static String ver = "1.1";
+	public static String ver = "1.2";
 
 	@Override
 	public void onEnable() {
 		Information(getServer());
 		saveDefaultConfig();
+		if (getConfig().getDouble("config-version") <= 1.2)  {
+			Bukkit.getLogger().warning("[WildRTP] Please update your config file to avoid issues!");
+		}
 		getCommand("wild").setExecutor(new RTP());
 	}
 
