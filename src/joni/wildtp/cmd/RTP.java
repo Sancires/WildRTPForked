@@ -36,7 +36,7 @@ public class RTP implements CommandExecutor {
 	
 	private void cooldown(Player p, CommandSender s) {
 		if (cooldown.get(p) == null) {tp(p, s); return;}
-		if (!(cooldown.get(p) < System.currentTimeMillis() -  WildRTP.getPlugin().getConfig().getLong("teleport.cooldown"))) {s.sendMessage(WildRTP.getPlugin().getConfig().getString("plugin-settings.prefix") + "You are on cooldown for " + (System.currentTimeMillis() - cooldown.get(p))/1000 + "s!"); return;}
+		if (!(cooldown.get(p) < System.currentTimeMillis() -  WildRTP.getPlugin().getConfig().getLong("teleport.cooldown"))) {s.sendMessage(WildRTP.getPlugin().getConfig().getString("plugin-settings.prefix") + "You are on cooldown for " + (cooldown.get(p) + WildRTP.getPlugin().getConfig().getLong("teleport.cooldown") -  System.currentTimeMillis())/1000 + "s!"); return;}
 		tp(p, s);
 	}
 	
@@ -53,9 +53,15 @@ public class RTP implements CommandExecutor {
 	private Location loc(World world) {
 		Random rand = new Random();
 		int x = WildRTP.getPlugin().getConfig().getInt("teleport.max-x");
-		int z = WildRTP.getPlugin().getConfig().getInt("teleport.max-y");
-		int randomx = (int) (Math.random() * x * (rand.nextBoolean() ? -1 : 1));
-		int randomz = (int) (Math.random() * z * (rand.nextBoolean() ? -1 : 1));
+		int z = WildRTP.getPlugin().getConfig().getInt("teleport.max-z");
+		int minx = WildRTP.getPlugin().getConfig().getInt("teleport.min-x");
+		int minz = WildRTP.getPlugin().getConfig().getInt("teleport.min-z");
+		int xRange = x - minx;
+		int zRange = z - minz;
+		int xPositive = (rand.nextBoolean() ? -1 : 1);
+		int zPositive = (rand.nextBoolean() ? -1 : 1);
+		int randomx = (int) (Math.random() * xRange * xPositive + (minx * xPositive));
+		int randomz = (int) (Math.random() * zRange * zPositive + (minz * zPositive));
 		Location loc = world.getHighestBlockAt(randomx, randomz).getLocation();
 		return loc;
 	}
@@ -72,6 +78,7 @@ public class RTP implements CommandExecutor {
 			antiCrash++;
 			if (antiCrash >= 50) {error(world, p, loc); break;}
 		}
+		if (antiCrash >= 50) {return;}
 		p.teleport(loc.add(0, 2, 0));
 		p.sendMessage(WildRTP.getPlugin().getConfig().getString("plugin-settings.prefix") + "Location found after " + count + " tries");
 		new BukkitRunnable() {	
@@ -84,13 +91,14 @@ public class RTP implements CommandExecutor {
 	}
 	
 	private void error(World w, Player p, Location loc) {
-		 System.out.println("WildRTP prevented your server from crashing!");
-		 System.out.println("Please report this to WildRTP!");
-		 System.out.println("Debug Information:");
-		 System.out.println("Server version: " + Bukkit.getBukkitVersion());
-		 System.out.println("World: " + w.toString());
-		 System.out.println("World enviroment: " + w.getEnvironment().toString());
-		 System.out.println("Player who executed the command: " + p.getName());
+		 p.sendMessage(WildRTP.getPlugin().getConfig().getString("plugin-settings.prefix") + "An error occurred while executing the command!");
+		 Bukkit.getLogger().warning("WildRTP prevented your server from crashing!");
+		 Bukkit.getLogger().warning("Please report this to WildRTP!");
+		 Bukkit.getLogger().warning("Debug Information:");
+		 Bukkit.getLogger().warning("Server version: " + Bukkit.getBukkitVersion());
+		 Bukkit.getLogger().warning("World: " + w.toString());
+		 Bukkit.getLogger().warning("World enviroment: " + w.getEnvironment().toString());
+		 Bukkit.getLogger().warning("Player who executed the command: " + p.getName());
  	}
 
 }

@@ -3,7 +3,9 @@
 # When permission.teleport: "NONE", no permission is set for the teleport
 teleport:
   max-x: 2500
-  max-y: 2500
+  max-z: 2500
+  min-x: 0
+  min-z: 0
   cooldown: 0
 
 permission:
@@ -17,3 +19,7 @@ plugin-settings:
 disabled-worlds:
   #example_world_name: "example_world_name"
   #world_the_end: "world_the_end"
+
+# Advanced
+# Do not touch unless you know what are doing
+config-version: 1.2
