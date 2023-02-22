@@ -7,6 +7,8 @@ teleport:
   min-x: 0
   min-z: 0
   cooldown: 0
+  # Future feature
+  pvp-timer: 0
 
 permission:
   teleport: "NONE"
@@ -20,6 +22,12 @@ disabled-worlds:
   #example_world_name: "example_world_name"
   #world_the_end: "world_the_end"
 
+# bStats allows you to collect usage data for your Bukkit, Spigot, Bungeecord or Sponge plugin.
+# more info: https://bstats.org/
+# if you don't want to use metrics you can disable it in /plugins/bStats or for only this plugin here
+bStats:
+  enabled: true
+
 # Advanced
 # Do not touch unless you know what are doing
-config-version: 1.2
+config-version: 2

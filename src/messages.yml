@@ -1,0 +1,11 @@
+# Legacy colors can be used
+# with &# you can use Hex-Colors
+# IMPORTANT: If you are using 1.15 and below Hex-Colors are not supported!
+config.reload: "The config has been reloaded!"
+player.only: "You must be a player"
+no.permission: "You don't have the permission to execute this command!"
+teleport.soon: "You will be teleported soon!"
+temp.nether.disabled: "You can't use this command in the nether!"
+world.disabled: "This world is disabled!"
+location.found: "Location found after {count} tries"
+cooldown: You are on cooldown for {cooldown} s!"
