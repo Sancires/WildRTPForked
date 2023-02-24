@@ -1,5 +1,6 @@
 # Config for WildRTP
 # cooldown in ms
+# pvp timer in ticks (20 ticks = 1s)
 # When permission.teleport: "NONE", no permission is set for the teleport
 teleport:
   max-x: 2500
@@ -7,7 +8,6 @@ teleport:
   min-x: 0
   min-z: 0
   cooldown: 0
-  # Future feature
   pvp-timer: 0
 
 permission:
@@ -30,4 +30,4 @@ bStats:
 
 # Advanced
 # Do not touch unless you know what are doing
-config-version: 2
+config-version: 3

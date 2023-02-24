@@ -3,6 +3,7 @@ package joni.wildtp.main;
 import org.bukkit.Bukkit;
 import org.bukkit.Server;
 import org.bukkit.plugin.Plugin;
+import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import joni.org.bstats.bukkit.Metrics;
@@ -13,18 +14,19 @@ public class WildRTP extends JavaPlugin {
 
 	public static String name = "WildRTP";
 	public static String author = "Joni";
-	public static String ver = "1.2";
+	public static String ver = "1.3.1";
 
 	@Override
 	public void onEnable() {
 		Information(getServer());
 		saveDefaultConfig();
-		if (getConfig().getDouble("config-version") <= 1.2) {
+		if (getConfig().getInt("config-version") < 3) {
 			Bukkit.getLogger().warning("[WildRTP] Please update your config file to avoid issues!");
 		}
 		getCommand("wild").setExecutor(new RTP());
 		initBStats();
 		MessageFile.createConfig();
+		initEvents();
 	}
 
 	public void Information(Server s) {
@@ -44,5 +46,10 @@ public class WildRTP extends JavaPlugin {
 		}
 		int pluginId = 17799;
 		Metrics metrics = new Metrics(this, pluginId);
+	}
+
+	private void initEvents() {
+		PluginManager pm = Bukkit.getPluginManager();
+		pm.registerEvents(new RTP(), this);
 	}
 }

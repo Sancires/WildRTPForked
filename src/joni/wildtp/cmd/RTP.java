@@ -2,6 +2,7 @@ package joni.wildtp.cmd;
 
 import java.util.HashMap;
 import java.util.Random;
+import java.util.UUID;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -13,14 +14,20 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.scheduler.BukkitTask;
 
 import joni.wildtp.MessageLoader;
 import joni.wildtp.main.WildRTP;
 
-public class RTP implements CommandExecutor, MessageLoader {
+public class RTP implements CommandExecutor, MessageLoader, Listener {
 
 	HashMap<Player, Long> cooldown = new HashMap<Player, Long>();
+	static HashMap<UUID, BukkitTask> taskmap = new HashMap<UUID, BukkitTask>();
+	static HashMap<UUID, Boolean> pvp = new HashMap<UUID, Boolean>();
 	FileConfiguration config = WildRTP.getPlugin().getConfig();
 
 	@Override
@@ -55,8 +62,26 @@ public class RTP implements CommandExecutor, MessageLoader {
 	}
 
 	private void cooldown(Player p, CommandSender s) {
+		if (pvp.get(p.getUniqueId()) != null && pvp.get(p.getUniqueId()) && config.getInt("teleport.pvp-timer") != 0) {
+			s.sendMessage(config.getString("plugin-settings.prefix") + message("pvp.timer.already"));
+			return;
+		}
 		if (cooldown.get(p) == null) {
-			tp(p, s);
+			if (config.getInt("teleport.pvp-timer") != 0) {
+				String msg = config.getString("plugin-settings.prefix") + message("pvp.timer.teleport")
+						.replace("{timer}", "" + config.getInt("teleport.pvp-timer") / 20);
+				s.sendMessage(msg);
+			}
+			pvp.put(p.getUniqueId(), true);
+			BukkitTask task = Bukkit.getScheduler().runTaskLater(WildRTP.getPlugin(), new Runnable() {
+
+				@Override
+				public void run() {
+					tp(p, s);
+				}
+
+			}, config.getInt("teleport.pvp-timer"));
+			taskmap.put(p.getUniqueId(), task);
 			return;
 		}
 		if (!(cooldown.get(p) < System.currentTimeMillis() - config.getLong("teleport.cooldown"))) {
@@ -66,10 +91,26 @@ public class RTP implements CommandExecutor, MessageLoader {
 			s.sendMessage(config.getString("plugin-settings.prefix") + fmsg);
 			return;
 		}
-		tp(p, s);
+		if (config.getInt("teleport.pvp-timer") != 0) {
+			String msg = config.getString("plugin-settings.prefix")
+					+ message("pvp.timer.teleport").replace("{timer}", "" + config.getInt("teleport.pvp-timer") / 20);
+			s.sendMessage(msg);
+		}
+		pvp.put(p.getUniqueId(), true);
+		BukkitTask task = Bukkit.getScheduler().runTaskLater(WildRTP.getPlugin(), new Runnable() {
+
+			@Override
+			public void run() {
+				tp(p, s);
+			}
+
+		}, config.getInt("teleport.pvp-timer"));
+		taskmap.put(p.getUniqueId(), task);
 	}
 
 	private void tp(Player p, CommandSender s) {
+		pvp.remove(p.getUniqueId());
+		taskmap.remove(p.getUniqueId());
 		cooldown.put(p, System.currentTimeMillis());
 		cooldown.replace(p, System.currentTimeMillis());
 		s.sendMessage(config.getString("plugin-settings.prefix") + message("teleport.soon"));
@@ -148,6 +189,18 @@ public class RTP implements CommandExecutor, MessageLoader {
 		Bukkit.getLogger().warning("World: " + w.toString());
 		Bukkit.getLogger().warning("World enviroment: " + w.getEnvironment().toString());
 		Bukkit.getLogger().warning("Player who executed the command: " + p.getName());
+	}
+
+	@EventHandler
+	public void onMove(PlayerMoveEvent e) {
+		Player p = e.getPlayer();
+		if (pvp.get(p.getUniqueId()) != null && pvp.get(p.getUniqueId())) {
+			p.sendMessage(config.getString("plugin-settings.prefix") + message("pvp.timer.cancel"));
+			BukkitTask t = taskmap.get(p.getUniqueId());
+			t.cancel();
+			pvp.remove(p.getUniqueId());
+			taskmap.remove(p.getUniqueId());
+		}
 	}
 
 }
