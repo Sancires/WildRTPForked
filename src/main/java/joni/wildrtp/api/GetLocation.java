@@ -1,10 +1,12 @@
 package joni.wildrtp.api;
 
+import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.World.Environment;
 
+import io.papermc.lib.PaperLib;
 import joni.wildrtp.api.RandomPoint.Algorithm;
 
 public interface GetLocation {
@@ -12,14 +14,16 @@ public interface GetLocation {
 	public static Location getRandomLocation(World w, Algorithm a, double startRadius, double endRadius, int originX,
 			int originY) {
 
-		int[] point = RandomPoint.getRandomPoint(a, 0, 0, 0, 0);
+		int[] point = RandomPoint.getRandomPoint(a, startRadius, endRadius, originX, originY);
 
-		Location loc = w.getHighestBlockAt(point[0], point[1]).getLocation();
+		Location loc = new Location(w, point[0], 0, point[1]);
+		Chunk c = PaperLib.getChunkAtAsync(loc).join();
+		c.getWorld().getHighestBlockAt(loc.blockX(), loc.blockY()).getLocation();
 
 		return loc;
 	}
 
-	public static SafeLocation getRandomSafeLocationObject(World w, Algorithm a, double startRadius, double endRadius,
+	public static SafeLocation getRandomSafeLocation(World w, Algorithm a, double startRadius, double endRadius,
 			int originX, int originY) {
 
 		Location loc = null;
@@ -41,40 +45,9 @@ public interface GetLocation {
 
 			tries++;
 
-			if (tries >= 15) {
-				System.err.println("It takes more than 15 tries to get a safelocation!");
-				return null;
-			}
-
-		}
-
-		return null;
-	}
-
-	public static Location getRandomSafeLocation(World w, Algorithm a, double startRadius, double endRadius,
-			int originX, int originY) {
-
-		Location loc = null;
-		boolean safe = false;
-		int tries = 0;
-
-		while (!safe) {
-
-			loc = getRandomLocation(w, a, startRadius, endRadius, originX, originY);
-
-			if (w.getEnvironment().equals(Environment.NORMAL) && !(loc.getBlock().isLiquid())) {
-				return loc;
-			}
-
-			if (w.getEnvironment().equals(Environment.THE_END)
-					&& !(loc.getBlock().getType().equals(Material.END_STONE))) {
-				return loc;
-			}
-
-			tries++;
-
-			if (tries >= 15) {
-				System.err.println("It takes more than 15 tries to get a safelocation!");
+			if (tries >= 20) {
+				System.err.println(
+						"It takes more than 20 tries to get a safelocation! Cancelled this to improve performance!");
 				return null;
 			}
 
