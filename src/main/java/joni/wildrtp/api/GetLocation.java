@@ -19,13 +19,14 @@ public interface GetLocation {
 		return loc;
 	}
 
-	public static SafeLocation getRandomSafeLocationAndTries(World w, Algorithm a, double startRadius, double endRadius,
+	public static SafeLocation getRandomSafeLocationObject(World w, Algorithm a, double startRadius, double endRadius,
 			int originX, int originY) {
 
 		Location loc = null;
 		int tries = 0;
+		boolean safe = false;
 
-		while (loc == null) {
+		while (!safe) {
 
 			loc = getRandomLocation(w, a, startRadius, endRadius, originX, originY);
 
@@ -40,6 +41,11 @@ public interface GetLocation {
 
 			tries++;
 
+			if (tries >= 15) {
+				System.err.println("It takes more than 15 tries to get a safelocation!");
+				return null;
+			}
+
 		}
 
 		return null;
@@ -49,8 +55,10 @@ public interface GetLocation {
 			int originX, int originY) {
 
 		Location loc = null;
+		boolean safe = false;
+		int tries = 0;
 
-		while (loc == null) {
+		while (!safe) {
 
 			loc = getRandomLocation(w, a, startRadius, endRadius, originX, originY);
 
@@ -61,6 +69,13 @@ public interface GetLocation {
 			if (w.getEnvironment().equals(Environment.THE_END)
 					&& !(loc.getBlock().getType().equals(Material.END_STONE))) {
 				return loc;
+			}
+
+			tries++;
+
+			if (tries >= 15) {
+				System.err.println("It takes more than 15 tries to get a safelocation!");
+				return null;
 			}
 
 		}
