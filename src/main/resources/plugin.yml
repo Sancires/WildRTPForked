@@ -1,4 +1,4 @@
-main: joni.wildtp.main.WildRTP
+main: joni.wildrtp.WildRTP
 name: WildRTP
 version: 2.0
 author: LasaJoni
