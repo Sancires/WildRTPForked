@@ -1,0 +1,10 @@
+main: joni.wildtp.main.WildRTP
+name: WildRTP
+version: 2.0
+author: LasaJoni
+api-version: 1.17
+description: With the help of the WildRTP, you can use a command to teleport to a random location.
+commands:
+  wild:
+    description: Random Teleport
+    aliases: [wilderness, rtp, randomtp, randomteleport, wildtp]

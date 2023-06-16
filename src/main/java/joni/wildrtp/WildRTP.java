@@ -6,6 +6,8 @@ import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import joni.wildrtp.cmd.CMD_Wild;
+
 public class WildRTP extends JavaPlugin {
 
 	public static String name = "WildRTP";
@@ -20,7 +22,7 @@ public class WildRTP extends JavaPlugin {
 			Bukkit.getLogger().warning("[WildRTP] Please update your config file to avoid issues!");
 		}
 		initEvents();
-
+		initCommands();
 	}
 
 	public void Information(Server s) {
@@ -34,6 +36,12 @@ public class WildRTP extends JavaPlugin {
 	}
 
 	private void initEvents() {
+		@SuppressWarnings("unused")
 		PluginManager pm = Bukkit.getPluginManager();
 	}
+
+	private void initCommands() {
+		getCommand("wild").setExecutor(new CMD_Wild());
+	}
+
 }
