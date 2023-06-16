@@ -18,7 +18,7 @@ public interface GetLocation {
 
 		Location loc = new Location(w, point[0], 0, point[1]);
 		Chunk c = PaperLib.getChunkAtAsync(loc).join();
-		c.getWorld().getHighestBlockAt(loc.blockX(), loc.blockY()).getLocation();
+		loc = c.getWorld().getHighestBlockAt(loc.blockX(), loc.blockY()).getLocation();
 
 		return loc;
 	}

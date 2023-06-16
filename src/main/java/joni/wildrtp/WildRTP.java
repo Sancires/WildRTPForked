@@ -17,10 +17,11 @@ public class WildRTP extends JavaPlugin {
 	@Override
 	public void onEnable() {
 		Information(getServer());
-		saveDefaultConfig();
-		if (getConfig().getInt("config-version") < 4) {
-			Bukkit.getLogger().warning("[WildRTP] Please update your config file to avoid issues!");
-		}
+		/*
+		 * saveDefaultConfig(); if (getConfig().getInt("config-version") < 4) {
+		 * Bukkit.getLogger().
+		 * warning("[WildRTP] Please update your config file to avoid issues!"); }
+		 */
 		initEvents();
 		initCommands();
 	}
