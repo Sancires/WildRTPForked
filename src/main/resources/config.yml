@@ -1,0 +1,13 @@
+lang: "en_EN"
+
+# seconds
+titles:
+  before:
+    enabled: false
+  after:
+    enabled: true
+    fadeIn: 0.5
+    stay: 2
+    fadeOut: 0.5
+
+prefix: "[§2WildRTP§f] §6"

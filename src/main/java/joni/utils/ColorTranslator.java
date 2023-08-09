@@ -9,7 +9,7 @@ public interface ColorTranslator {
 
 	public static final Pattern HEX_PATTERN = Pattern.compile("&#(\\w{5}[0-9a-f])");
 
-	public default String translateColor(String textToTranslate) {
+	public static String translateColor(String textToTranslate) {
 
 		Matcher matcher = HEX_PATTERN.matcher(textToTranslate);
 		StringBuffer buffer = new StringBuffer();
