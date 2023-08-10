@@ -28,8 +28,7 @@ public interface TeleportToRandom {
 				SafeLocation s = GetLocation.getRandomSafeLocation(w, a, startRadius, endRadius, originX, originY);
 
 				PaperLib.teleportAsync(e, s.location.add(0, 1, 0));
-				e.sendMessage("Tries: " + s.tries);
-				SendInfo.sendFinished(e, s);
+				SendInfo.sendEnd(e, s);
 			}
 		}.start();
 	}

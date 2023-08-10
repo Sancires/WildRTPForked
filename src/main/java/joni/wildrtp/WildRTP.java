@@ -1,5 +1,11 @@
 package joni.wildrtp;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.URL;
+import java.nio.charset.StandardCharsets;
+
 import org.bukkit.Bukkit;
 import org.bukkit.Server;
 import org.bukkit.plugin.Plugin;
@@ -23,12 +29,13 @@ public class WildRTP extends JavaPlugin {
 		initCommands();
 		saveDefaultConfig();
 		MessageFile.createConfig();
+		updateChecker();
+		// getLogger().info("");
 	}
 
 	public void Information(Server s) {
-		System.out.println("WildRTP by " + author);
-		System.out.println("Your are running on version " + ver);
-		System.out.println("Thank you for using my plugin!");
+		getLogger().info("WildRTP by " + author);
+		getLogger().info("Thank you for using my plugin!");
 		PaperLib.suggestPaper(this);
 	}
 
@@ -43,6 +50,39 @@ public class WildRTP extends JavaPlugin {
 
 	private void initCommands() {
 		getCommand("wild").setExecutor(new CMD_Wild());
+	}
+
+	private void updateChecker() {
+		new Thread() {
+			public void run() {
+				try {
+					StringBuilder content = new StringBuilder();
+
+					URL url = new URL("https://raw.githubusercontent.com/LasaJoniHD/WildRTP/dev/this-version.txt");
+					BufferedReader reader = new BufferedReader(
+							new InputStreamReader(url.openStream(), StandardCharsets.UTF_8));
+
+					String line;
+					while ((line = reader.readLine()) != null) {
+						content.append(line);
+					}
+
+					reader.close();
+
+					if (content.toString().equals(ver)) {
+						getLogger().info("You are running the latest version!");
+						return;
+					}
+
+					getLogger().info("There is a update avaible for WildRTP!");
+					getLogger().info("https://modrinth.com/plugin/wildrtp");
+
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		}.start();
+
 	}
 
 }

@@ -1,6 +1,10 @@
 chat:
-  teleported: "Location found after %tries% trie(s)"
+  start: "You will be teleported soon!"
+  end: "Location found after %tries% trie(s)"
 titles:
+  start:
+    title: "&2You will be teleported!"
+    sub: ""
   end:
     title: "&2Location found"
     sub: "&6After %tries% trie(s)"

@@ -1,13 +1,23 @@
 lang: "en_EN"
 
-# seconds
+# Titles in seconds
+# start = when command has been run (makes no sense because to fast)
+# end = when player gets teleported
 titles:
-  before:
+  start:
     enabled: false
-  after:
+    fadeIn: 0.5
+    stay: 2
+    fadeOut: 0.5
+  end:
     enabled: true
     fadeIn: 0.5
     stay: 2
     fadeOut: 0.5
+
+# Should it send messages at the begin of the teleport or after the teleport
+messages:
+  start: false
+  end: true
 
 prefix: "[§2WildRTP§f] §6"
