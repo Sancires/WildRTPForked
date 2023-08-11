@@ -2,6 +2,8 @@ package joni.wildrtp.api;
 
 import java.util.Random;
 
+import joni.wildrtp.WildRTP;
+
 public interface RandomPoint {
 
 	public enum Algorithm {
@@ -14,8 +16,8 @@ public interface RandomPoint {
 		int[] randomPoint = null;
 
 		if (algorithm == null) {
-			System.err.println("RandomPoint.getRandomPoint() caused an error:");
-			System.err.println("algorithm is null");
+			WildRTP.logger().fine("RandomPoint.getRandomPoint() caused an error:");
+			WildRTP.logger().fine("algorithm is null");
 			return null;
 		}
 
@@ -26,8 +28,8 @@ public interface RandomPoint {
 			randomPoint = generateRandomPointOnSquare(startRadius, endRadius, originX, originY);
 
 		if (randomPoint == null) {
-			System.err.println("RandomPoint.getRandomPoint() caused an error:");
-			System.err.println("randomPoint is null");
+			WildRTP.logger().fine("RandomPoint.getRandomPoint() caused an error:");
+			WildRTP.logger().fine("randomPoint is null");
 		}
 
 		return randomPoint;

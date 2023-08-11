@@ -20,4 +20,10 @@ messages:
   start: false
   end: true
 
+# seconds
+cooldown:
+  enabled: true
+  custom: false
+  time: 30
+
 prefix: "[§2WildRTP§f] §6"

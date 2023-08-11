@@ -1,6 +1,7 @@
 chat:
   start: "You will be teleported soon!"
   end: "Location found after %tries% trie(s)"
+  cooldown: "&cYou are on cooldown! Please wait %cooldown%!"
 titles:
   start:
     title: "&2You will be teleported!"

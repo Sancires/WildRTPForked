@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
+import java.util.logging.Logger;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Server;
@@ -30,7 +31,6 @@ public class WildRTP extends JavaPlugin {
 		saveDefaultConfig();
 		MessageFile.createConfig();
 		updateChecker();
-		// getLogger().info("");
 	}
 
 	public void Information(Server s) {
@@ -41,6 +41,16 @@ public class WildRTP extends JavaPlugin {
 
 	public static Plugin getPlugin() {
 		return Bukkit.getPluginManager().getPlugin("WildRTP");
+	}
+
+	public static Logger logger() {
+		return getPlugin().getLogger();
+	}
+
+	public static void reload() {
+		getPlugin().reloadConfig();
+		MessageFile.createConfig();
+		logger().info("The config and messages have been reloaded!");
 	}
 
 	private void initEvents() {
@@ -78,7 +88,7 @@ public class WildRTP extends JavaPlugin {
 					getLogger().info("https://modrinth.com/plugin/wildrtp");
 
 				} catch (IOException e) {
-					e.printStackTrace();
+					getLogger().info("Can't check for updates? Server might be unavailable...");
 				}
 			}
 		}.start();
