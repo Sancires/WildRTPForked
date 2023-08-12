@@ -32,6 +32,8 @@ public class CooldownManager {
 
 		// including
 
+		System.out.println(getCustomCooldown(p));
+
 		if (config.getBoolean("cooldown.custom") && last <= (time - getCustomCooldown(p))) {
 			lastRun.replace(uuid, time);
 			return false;
@@ -58,10 +60,13 @@ public class CooldownManager {
 
 	}
 
+	// WIP scheduled for tomorrow (today)
+
 	private static long getCustomCooldown(Player pl) {
 		for (String permission : pl.getEffectivePermissions().stream().map(p -> p.getPermission())
 				.toArray(String[]::new)) {
 			if (permission.startsWith("wildrtp.cooldown.custom.")) {
+				System.out.println("CooldownManager.getCustomCooldown()");
 				String cooldownString = permission.replace("wildrtp.cooldown.custom", "");
 				try {
 					return Long.parseLong(cooldownString) * 1000;
@@ -69,6 +74,7 @@ public class CooldownManager {
 				}
 			}
 		}
+		System.out.println("player = 0");
 		return 0;
 	}
 

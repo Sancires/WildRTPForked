@@ -10,6 +10,7 @@ repositories {
 dependencies {
     compileOnly("io.papermc.paper:paper-api:1.19.4-R0.1-SNAPSHOT")
     implementation("io.papermc:paperlib:1.0.7")
+    implementation("org.bstats:bstats-bukkit:3.0.2")
 }
 java {
     toolchain {
@@ -18,4 +19,5 @@ java {
 }
 shadowJar {
    relocate "io.papermc.lib", "joni.paperlib"
+   relocate "org.bstats", "joni.bstats"
 }

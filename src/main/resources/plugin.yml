@@ -8,3 +8,10 @@ commands:
   wild:
     description: Random Teleport
     aliases: [wilderness, rtp, randomtp, randomteleport, wildtp]
+permissions:
+  wildrtp.rtp:
+    description: "RTP"
+    default: true
+  wildrtp.cooldown.bypass:
+    description: "Bypass the cooldown, if enabled"
+    default: op

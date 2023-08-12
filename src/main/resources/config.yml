@@ -1,5 +1,19 @@
 lang: "en_EN"
 
+teleport:
+  min: 1000
+  max: 2500
+  algorithm: CIRCLE
+  center:
+    player: false
+    x: 0
+    z: 0
+
+auto:
+  onfirstjoin: false
+  onjoin: false
+  ondeath: false
+
 # Titles in seconds
 # start = when command has been run (makes no sense because to fast)
 # end = when player gets teleported
@@ -26,4 +40,10 @@ cooldown:
   custom: false
   time: 30
 
+movetimer:
+  enabled: true
+  time: 5
+
 prefix: "[§2WildRTP§f] §6"
+
+metrics: true

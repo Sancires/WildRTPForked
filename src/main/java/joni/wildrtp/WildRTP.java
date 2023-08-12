@@ -7,6 +7,7 @@ import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.logging.Logger;
 
+import org.bstats.bukkit.Metrics;
 import org.bukkit.Bukkit;
 import org.bukkit.Server;
 import org.bukkit.plugin.Plugin;
@@ -14,6 +15,7 @@ import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import io.papermc.lib.PaperLib;
+import joni.listener.OnMove;
 import joni.utils.MessageFile;
 import joni.wildrtp.cmd.CMD_Wild;
 
@@ -30,6 +32,7 @@ public class WildRTP extends JavaPlugin {
 		initCommands();
 		saveDefaultConfig();
 		MessageFile.createConfig();
+		metrics();
 		updateChecker();
 	}
 
@@ -54,12 +57,24 @@ public class WildRTP extends JavaPlugin {
 	}
 
 	private void initEvents() {
-		@SuppressWarnings("unused")
 		PluginManager pm = Bukkit.getPluginManager();
+		if (getConfig().getBoolean("movetimer.enabled"))
+			pm.registerEvents(new OnMove(), this);
 	}
 
 	private void initCommands() {
 		getCommand("wild").setExecutor(new CMD_Wild());
+	}
+
+	public void metrics() {
+		if (!getConfig().getBoolean("metrics"))
+			return;
+		int pluginId = 17799;
+		@SuppressWarnings("unused")
+		Metrics m = new Metrics(this, pluginId);
+		// m.addCustomChart(new SimplePie("used_language", () -> {
+		// return getConfig().getString("lang");
+		// }));
 	}
 
 	private void updateChecker() {

@@ -9,6 +9,7 @@ import org.jetbrains.annotations.NotNull;
 
 import joni.utils.ConfigLoader;
 import joni.utils.CooldownManager;
+import joni.utils.MoveTimer;
 import joni.wildrtp.WildRTP;
 import joni.wildrtp.api.RandomPoint.Algorithm;
 import joni.wildrtp.api.SendInfo;
@@ -30,7 +31,8 @@ public class CMD_Wild implements CommandExecutor {
 
 		Player p = (Player) s;
 
-		// if (!(p.hasPermission("") || !true))
+		if (!(p.hasPermission("wildrtp.rtp")))
+			return false;
 
 		Boolean cooldown = false;
 		if (config.getBoolean("cooldown.enabled"))
@@ -39,7 +41,14 @@ public class CMD_Wild implements CommandExecutor {
 		if (cooldown)
 			return false;
 
+		if (config.getBoolean("movetimer.enabled")) {
+			MoveTimer.wait(p);
+			return false;
+		}
+
 		SendInfo.sendStart(p);
+
+		// include config WIP
 
 		TeleportToRandom.teleportWithInfo(p.getWorld(), Algorithm.CIRCLE, Double.parseDouble(args[0]),
 				Double.parseDouble(args[1]), Integer.parseInt(args[2]), Integer.parseInt(args[3]), p);
