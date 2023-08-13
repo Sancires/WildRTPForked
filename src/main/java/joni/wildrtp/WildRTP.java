@@ -89,7 +89,7 @@ public class WildRTP extends JavaPlugin {
 				try {
 					StringBuilder content = new StringBuilder();
 
-					URL url = new URL("https://raw.githubusercontent.com/LasaJoniHD/WildRTP/dev/this-version.txt");
+					URL url = new URL("https://raw.githubusercontent.com/LasaJoniHD/WildRTP/main/this-version.txt");
 					BufferedReader reader = new BufferedReader(
 							new InputStreamReader(url.openStream(), StandardCharsets.UTF_8));
 
