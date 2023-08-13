@@ -53,8 +53,10 @@ public class WildRTP extends JavaPlugin {
 	}
 
 	public static void reload() {
+		getPlugin().saveConfig();
 		getPlugin().reloadConfig();
 		MessageFile.createConfig();
+		getPlugin().saveDefaultConfig();
 		logger().info("The config and messages have been reloaded!");
 	}
 
