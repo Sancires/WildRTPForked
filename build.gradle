@@ -1,0 +1,23 @@
+plugins {
+  id "com.github.johnrengelman.shadow" version "8.1.1"
+}
+apply plugin: "java"
+apply plugin: "eclipse"
+repositories {
+    mavenCentral()
+    maven {url "https://repo.papermc.io/repository/maven-public/"}
+}
+dependencies {
+    compileOnly("io.papermc.paper:paper-api:1.19.4-R0.1-SNAPSHOT")
+    implementation("io.papermc:paperlib:1.0.7")
+    implementation("org.bstats:bstats-bukkit:3.0.2")
+}
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(17)
+    }
+}
+shadowJar {
+   relocate "io.papermc.lib", "joni.paperlib"
+   relocate "org.bstats", "joni.bstats"
+}
