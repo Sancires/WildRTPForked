@@ -17,7 +17,7 @@ public class OnJoin implements Listener {
 	@EventHandler(priority = EventPriority.LOW)
 	public void onMove(PlayerJoinEvent e) {
 		Player p = e.getPlayer();
-		if (config.getBoolean("auto.onfirstjoin") && p.hasPlayedBefore()) {
+		if (config.getBoolean("auto.onfirstjoin") && !p.hasPlayedBefore()) {
 			PlayerTeleportManager.teleport(p);
 			return;
 		}
