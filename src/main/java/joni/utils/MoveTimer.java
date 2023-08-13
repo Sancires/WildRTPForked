@@ -3,23 +3,35 @@ package joni.utils;
 import java.util.ArrayList;
 import java.util.UUID;
 
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
+
+import joni.wildrtp.WildRTP;
+import joni.wildrtp.api.SendInfo;
 
 public interface MoveTimer {
 
 	public static ArrayList<UUID> awaitRTP = new ArrayList<UUID>();
 	public static ArrayList<UUID> isCancelled = new ArrayList<UUID>();
 
+	static FileConfiguration config = WildRTP.getPlugin().getConfig();
+
 	public static void wait(Player p) {
 		new Thread() {
 			public void run() {
 				UUID u = p.getUniqueId();
+				if (p.hasPermission("wildrtp.movetimer.bypass")) {
+					remove(u);
+					SendInfo.sendStart(p);
+					PlayerTeleportManager.teleport(p);
+					return;
+				}
 				if (awaitRTP.contains(u)) {
-					p.sendMessage("already await tp");
+					p.sendMessage(ConfigLoader.loadMessageWithPrefix("chat.movetimer.already"));
 					return;
 				}
 				awaitRTP.add(u);
-				for (int i = 10; i > 0; i--) {
+				for (int i = config.getInt("movetimer.time"); i > 0; i--) {
 					if (isCancelled.contains(u)) {
 						p.sendMessage(ConfigLoader.loadMessageWithPrefix("chat.movetimer.cancelled"));
 						remove(u);
@@ -33,9 +45,9 @@ public interface MoveTimer {
 						Thread.currentThread().interrupt();
 					}
 				}
-				// Do something WIP for release!!!
-				p.sendMessage("done");
 				remove(u);
+				SendInfo.sendStart(p);
+				PlayerTeleportManager.teleport(p);
 			}
 		}.start();
 	}

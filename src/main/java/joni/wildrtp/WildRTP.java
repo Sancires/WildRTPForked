@@ -15,6 +15,8 @@ import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import io.papermc.lib.PaperLib;
+import joni.listener.OnDeath;
+import joni.listener.OnJoin;
 import joni.listener.OnMove;
 import joni.utils.MessageFile;
 import joni.wildrtp.cmd.CMD_Wild;
@@ -60,6 +62,10 @@ public class WildRTP extends JavaPlugin {
 		PluginManager pm = Bukkit.getPluginManager();
 		if (getConfig().getBoolean("movetimer.enabled"))
 			pm.registerEvents(new OnMove(), this);
+		if (getConfig().getBoolean("auto.onfirstjoin") || getConfig().getBoolean("auto.onjoin"))
+			pm.registerEvents(new OnJoin(), this);
+		if (getConfig().getBoolean("auto.ondeath"))
+			pm.registerEvents(new OnDeath(), this);
 	}
 
 	private void initCommands() {

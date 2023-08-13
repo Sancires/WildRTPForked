@@ -15,3 +15,11 @@ permissions:
   wildrtp.cooldown.bypass:
     description: "Bypass the cooldown, if enabled"
     default: op
+  wildrtp.cooldown.custom:
+    description: "Set a custom cooldown under the section custom in the config.yml"
+  wildrtp.movetimer.bypass:
+    description: "Bypass the movetimer, if enabled"
+    default: op
+  wildrtp.reload:
+    description: "Reload the config"
+    default: op

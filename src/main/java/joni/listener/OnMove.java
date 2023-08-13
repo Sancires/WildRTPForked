@@ -21,8 +21,9 @@ public class OnMove implements Listener {
 		final Location to = e.getTo();
 		final Location from = e.getFrom();
 
-		if (from.getX() == to.getX() || from.getY() == to.getY() || from.getZ() == to.getZ())
+		if (!(from.getX() != to.getX() || from.getY() != to.getY() || from.getZ() != to.getZ()))
 			return;
+
 		@NotNull
 		UUID uuid = p.getUniqueId();
 		if (MoveTimer.awaitRTP.contains(uuid) && !MoveTimer.isCancelled.contains(uuid)) {

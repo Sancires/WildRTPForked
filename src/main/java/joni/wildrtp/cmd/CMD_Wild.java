@@ -1,5 +1,7 @@
 package joni.wildrtp.cmd;
 
+import java.util.List;
+
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -10,10 +12,9 @@ import org.jetbrains.annotations.NotNull;
 import joni.utils.ConfigLoader;
 import joni.utils.CooldownManager;
 import joni.utils.MoveTimer;
+import joni.utils.PlayerTeleportManager;
 import joni.wildrtp.WildRTP;
-import joni.wildrtp.api.RandomPoint.Algorithm;
 import joni.wildrtp.api.SendInfo;
-import joni.wildrtp.api.TeleportToRandom;
 
 public class CMD_Wild implements CommandExecutor {
 
@@ -23,8 +24,19 @@ public class CMD_Wild implements CommandExecutor {
 	public boolean onCommand(@NotNull CommandSender s, @NotNull Command cmd, @NotNull String label,
 			@NotNull String[] args) {
 
-		if (args.length == 1 && args[0].equals("info"))
-			info(s);
+		if (args.length == 1) {
+			String arg = args[0];
+			switch (arg) {
+			case "info":
+				info(s);
+				return false;
+			case "reload":
+				if (s.hasPermission("wildrtp.reload")) {
+					WildRTP.reload();
+					return false;
+				}
+			}
+		}
 
 		if (!(s instanceof Player))
 			return false;
@@ -33,6 +45,16 @@ public class CMD_Wild implements CommandExecutor {
 
 		if (!(p.hasPermission("wildrtp.rtp")))
 			return false;
+
+		List<String> blacklist = config.getStringList("blacklist");
+
+		if (!blacklist.isEmpty())
+			for (String bw : blacklist) {
+				if (p.getWorld().getName().equals(bw)) {
+					p.sendMessage(ConfigLoader.loadMessageWithPrefix("chat.blacklisted"));
+					return false;
+				}
+			}
 
 		Boolean cooldown = false;
 		if (config.getBoolean("cooldown.enabled"))
@@ -48,10 +70,8 @@ public class CMD_Wild implements CommandExecutor {
 
 		SendInfo.sendStart(p);
 
-		// include config WIP
+		PlayerTeleportManager.teleport(p);
 
-		TeleportToRandom.teleportWithInfo(p.getWorld(), Algorithm.CIRCLE, Double.parseDouble(args[0]),
-				Double.parseDouble(args[1]), Integer.parseInt(args[2]), Integer.parseInt(args[3]), p);
 		return false;
 	}
 

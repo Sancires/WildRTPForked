@@ -1,13 +1,12 @@
 # WildRTP
 
-![Modrinth Downloads](https://img.shields.io/modrinth/dt/wildrtp)
-![Modrinth Game Versions](https://img.shields.io/modrinth/game-versions/wildrtp)
+[![Modrinth Downloads](https://img.shields.io/modrinth/dt/wildrtp)](https://modrinth.com/plugin/wildrtp "Modrinth")
 
 ## Features
 
 - Random teleportation in Overworld & Nether & End
 - Only teleport on surface & safe areas
-- Adjustable maximum and minimum X and Z coordinates
+- Adjustable maximum and minimum coordinates
 - Circle & Square Algorithm
 - Cooldown system
 - Cancel on move
@@ -17,5 +16,6 @@
 
 ## Coming soon
 
-- More algorithms
 - Multi-world support
+- Lands API
+- Chunky Border
