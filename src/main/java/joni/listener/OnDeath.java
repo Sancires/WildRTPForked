@@ -29,4 +29,8 @@ public class OnDeath implements Listener {
 			}.start();
 	}
 
+	public static void reload() {
+		config = WildRTP.getPlugin().getConfig();
+	}
+
 }

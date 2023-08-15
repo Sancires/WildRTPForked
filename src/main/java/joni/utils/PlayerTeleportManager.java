@@ -29,4 +29,8 @@ public class PlayerTeleportManager {
 				config.getDouble("teleport.min"), config.getDouble("teleport.max"), centerX, centerZ, p);
 	}
 
+	public static void reload() {
+		config = WildRTP.getPlugin().getConfig();
+	}
+
 }

@@ -27,4 +27,8 @@ public class OnJoin implements Listener {
 		}
 	}
 
+	public static void reload() {
+		config = WildRTP.getPlugin().getConfig();
+	}
+
 }

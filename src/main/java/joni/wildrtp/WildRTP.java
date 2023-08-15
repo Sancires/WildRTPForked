@@ -18,7 +18,9 @@ import io.papermc.lib.PaperLib;
 import joni.listener.OnDeath;
 import joni.listener.OnJoin;
 import joni.listener.OnMove;
+import joni.utils.CooldownManager;
 import joni.utils.MessageFile;
+import joni.utils.PlayerTeleportManager;
 import joni.wildrtp.cmd.CMD_Wild;
 
 public class WildRTP extends JavaPlugin {
@@ -56,6 +58,11 @@ public class WildRTP extends JavaPlugin {
 		getPlugin().reloadConfig();
 		MessageFile.createConfig();
 		getPlugin().saveDefaultConfig();
+		OnDeath.reload();
+		OnJoin.reload();
+		CooldownManager.reload();
+		PlayerTeleportManager.reload();
+		CMD_Wild.reload();
 		logger().info("The config and messages have been reloaded!");
 	}
 
