@@ -68,8 +68,8 @@ cooldown:
 # In order to get custom cooldowns to work, you have to enter a group here, just like the comments under the section custom, just remove # before the group and the cooldown and rename it
 # and set it up as you want. This might be glitchy! Then you only need to give the player / group the permission wildrtp.cooldown.custom.yourgroup
 custom:
-#  example1:
-#    cooldown: 15
+  example1:
+    cooldown: 15
 
 # Movetimer
 # also known as combat timer / pvp timer
