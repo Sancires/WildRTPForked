@@ -32,6 +32,7 @@ public class CMD_Wild implements CommandExecutor {
 				return false;
 			case "reload":
 				if (s.hasPermission("wildrtp.reload")) {
+					s.sendMessage("config reloaded!");
 					WildRTP.reload();
 					return false;
 				}
