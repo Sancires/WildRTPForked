@@ -88,4 +88,8 @@ public class CooldownManager {
 
 	}
 
+	public static void reload() {
+		config = WildRTP.getPlugin().getConfig();
+	}
+
 }

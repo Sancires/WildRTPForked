@@ -80,4 +80,8 @@ public class CMD_Wild implements CommandExecutor {
 		s.sendMessage(ConfigLoader.loadPrefix() + "by " + WildRTP.author + " | Version: " + WildRTP.ver);
 	}
 
+	public static void reload() {
+		config = WildRTP.getPlugin().getConfig();
+	}
+
 }
