@@ -27,7 +27,7 @@ public class WildRTP extends JavaPlugin {
 
 	public static String name = "WildRTP";
 	public static String author = "Joni";
-	public static String ver = "2.0";
+	public static String ver = "2.1";
 
 	@Override
 	public void onEnable() {
@@ -43,6 +43,10 @@ public class WildRTP extends JavaPlugin {
 	public void Information(Server s) {
 		getLogger().info("WildRTP by " + author);
 		getLogger().info("Thank you for using my plugin!");
+		if (PaperLib.isSpigot() && !PaperLib.isPaper()) {
+			getLogger().info("===============================");
+			getLogger().info("I strongly recommend paper for better performance!");
+		}
 		PaperLib.suggestPaper(this);
 	}
 
@@ -84,11 +88,7 @@ public class WildRTP extends JavaPlugin {
 		if (!getConfig().getBoolean("metrics"))
 			return;
 		int pluginId = 17799;
-		@SuppressWarnings("unused")
-		Metrics m = new Metrics(this, pluginId);
-		// m.addCustomChart(new SimplePie("used_language", () -> {
-		// return getConfig().getString("lang");
-		// }));
+		new Metrics(this, pluginId);
 	}
 
 	private void updateChecker() {
@@ -113,7 +113,7 @@ public class WildRTP extends JavaPlugin {
 						return;
 					}
 
-					getLogger().info("There is a update avaible for WildRTP!");
+					getLogger().info("There is an update avaible for WildRTP!");
 					getLogger().info("https://modrinth.com/plugin/wildrtp");
 
 				} catch (IOException e) {

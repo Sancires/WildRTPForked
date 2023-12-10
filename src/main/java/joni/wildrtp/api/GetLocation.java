@@ -9,7 +9,6 @@ import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.World.Environment;
 import org.bukkit.block.data.BlockData;
-import org.jetbrains.annotations.NotNull;
 
 import io.papermc.lib.PaperLib;
 import joni.wildrtp.api.RandomPoint.Algorithm;
@@ -28,7 +27,6 @@ public interface GetLocation {
 
 			Chunk c = cf.get();
 
-			@NotNull
 			ChunkSnapshot cs = c.getChunkSnapshot();
 
 			int y = cs.getHighestBlockYAt(loc.getBlockX() & 0xF, loc.getBlockZ() & 0xF) - 1;
@@ -66,7 +64,6 @@ public interface GetLocation {
 					int chunkX = loc.getBlockX() & 15;
 					int chunkZ = loc.getBlockZ() & 15;
 
-					@NotNull
 					BlockData b = cs.getBlockData(chunkX, y, chunkZ);
 
 					if (b.getMaterial().isSolid()

@@ -7,7 +7,6 @@ import java.util.UUID;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
-import org.jetbrains.annotations.NotNull;
 
 import joni.wildrtp.WildRTP;
 
@@ -22,7 +21,6 @@ public class CooldownManager {
 			return false;
 
 		long time = System.currentTimeMillis();
-		@NotNull
 		UUID uuid = p.getUniqueId();
 
 		if (MoveTimer.awaitRTP.contains(uuid)) {

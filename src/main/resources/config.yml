@@ -36,7 +36,7 @@ blacklist:
   #- world1
 
 # Titles
-# settings in seconds
+# in seconds
 # When RTP starts to generate a safe location the start title will be displayed. However on good servers the algorithm is very fast and it can happen that the title is never shown.
 # When a safe location has been found and the player has been teleported then the end title is shown.
 titles:

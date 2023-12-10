@@ -8,7 +8,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerMoveEvent;
-import org.jetbrains.annotations.NotNull;
 
 import joni.utils.MoveTimer;
 
@@ -24,7 +23,6 @@ public class OnMove implements Listener {
 		if (!(from.getX() != to.getX() || from.getY() != to.getY() || from.getZ() != to.getZ()))
 			return;
 
-		@NotNull
 		UUID uuid = p.getUniqueId();
 		if (MoveTimer.awaitRTP.contains(uuid) && !MoveTimer.isCancelled.contains(uuid)) {
 			MoveTimer.isCancelled.add(uuid);

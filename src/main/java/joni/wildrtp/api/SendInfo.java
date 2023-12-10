@@ -1,7 +1,5 @@
 package joni.wildrtp.api;
 
-import java.time.Duration;
-
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
@@ -9,8 +7,6 @@ import org.bukkit.entity.Player;
 import joni.utils.ConfigLoader;
 import joni.wildrtp.WildRTP;
 import joni.wildrtp.api.GetLocation.SafeLocation;
-import net.kyori.adventure.text.Component;
-import net.kyori.adventure.title.Title;
 
 public interface SendInfo {
 
@@ -27,14 +23,10 @@ public interface SendInfo {
 			p.sendMessage(preparedEndMessage(s, p));
 
 		if (config.getBoolean("titles.end.enabled"))
-			p.showTitle(Title.title(
-					Component.text(ConfigLoader.loadMessage("titles.end.title").replaceAll("%tries%",
-							String.valueOf(s.tries))),
-					Component.text(
-							ConfigLoader.loadMessage("titles.end.sub").replaceAll("%tries%", String.valueOf(s.tries))),
-					Title.Times.times(Duration.ofSeconds(config.getInt("titles.end.fadeIn")),
-							Duration.ofSeconds(config.getInt("titles.end.stay")),
-							Duration.ofSeconds(config.getInt("titles.end.fadeOut")))));
+			p.sendTitle(ConfigLoader.loadMessage("titles.end.title").replaceAll("%tries%", String.valueOf(s.tries)),
+					ConfigLoader.loadMessage("titles.end.sub").replaceAll("%tries%", String.valueOf(s.tries)),
+					config.getInt("titles.end.fadeIn") * 20, config.getInt("titles.end.stay") * 20,
+					config.getInt("titles.end.fadeOut") * 20);
 
 	}
 
@@ -63,11 +55,9 @@ public interface SendInfo {
 			p.sendMessage(preparedStartMessage(p));
 
 		if (config.getBoolean("titles.start.enabled"))
-			p.showTitle(Title.title(Component.text(ConfigLoader.loadMessage("titles.start.title")),
-					Component.text(ConfigLoader.loadMessage("titles.start.sub")),
-					Title.Times.times(Duration.ofSeconds(config.getInt("titles.start.fadeIn")),
-							Duration.ofSeconds(config.getInt("titles.start.stay")),
-							Duration.ofSeconds(config.getInt("titles.start.fadeOut")))));
+			p.sendTitle(ConfigLoader.loadMessage("titles.start.title"), ConfigLoader.loadMessage("titles.start.sub"),
+					config.getInt("titles.start.fadeIn") * 20, config.getInt("titles.start.stay") * 20,
+					config.getInt("titles.start.fadeOut") * 20);
 
 	}
 
