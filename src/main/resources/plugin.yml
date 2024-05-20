@@ -8,6 +8,8 @@ commands:
   wild:
     description: Random Teleport
     aliases: [wilderness, rtp, randomtp, randomteleport, wildtp]
+  customrtp:
+    description: Custom Random Teleport
 permissions:
   wildrtp.rtp:
     description: "RTP"
@@ -22,4 +24,7 @@ permissions:
     default: op
   wildrtp.reload:
     description: "Reload the config"
+    default: op
+  wildrtp.custom:
+    description: "Custom RTP command"
     default: op
