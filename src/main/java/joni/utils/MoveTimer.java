@@ -9,7 +9,7 @@ import org.bukkit.entity.Player;
 import joni.wildrtp.WildRTP;
 import joni.wildrtp.api.SendInfo;
 
-public interface MoveTimer {
+public class MoveTimer {
 
 	public static ArrayList<UUID> awaitRTP = new ArrayList<UUID>();
 	public static ArrayList<UUID> isCancelled = new ArrayList<UUID>();
