@@ -1,8 +1,9 @@
 plugins {
   id "com.github.johnrengelman.shadow" version "8.1.1"
+  id "java"
+  id "eclipse"
+  id "idea"
 }
-apply plugin: "java"
-apply plugin: "eclipse"
 repositories {
   mavenCentral()
   maven {
