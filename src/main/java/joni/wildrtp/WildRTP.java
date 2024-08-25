@@ -35,7 +35,9 @@ public class WildRTP extends JavaPlugin {
 
 	public static String name = "WildRTP";
 	public static String author = "Joni";
-	public static String ver = "2.3";
+	public static String ver = "2.4";
+	public static Boolean update = false;
+	public static Boolean notify = true;
 
 	@Override
 	public void onEnable() {
@@ -47,6 +49,9 @@ public class WildRTP extends JavaPlugin {
 		initCommands();
 		metrics();
 		updateChecker();
+
+		notify = getConfig().getBoolean("notify-updates-on-join");
+
 	}
 
 	public void Information(Server s) {
@@ -83,8 +88,7 @@ public class WildRTP extends JavaPlugin {
 		PluginManager pm = Bukkit.getPluginManager();
 		if (getConfig().getBoolean("movetimer.enabled"))
 			pm.registerEvents(new OnMove(), this);
-		if (getConfig().getBoolean("auto.onfirstjoin") || getConfig().getBoolean("auto.onjoin"))
-			pm.registerEvents(new OnJoin(), this);
+		pm.registerEvents(new OnJoin(), this);
 		if (getConfig().getBoolean("auto.ondeath"))
 			pm.registerEvents(new OnDeath(), this);
 	}
@@ -102,13 +106,25 @@ public class WildRTP extends JavaPlugin {
 	}
 
 	private void updateConfig() {
-
 		File fc = new File(getDataFolder(), "config.yml");
 		FileConfiguration c = new YamlConfiguration();
 		try {
 			c.load(fc);
 		} catch (IOException | InvalidConfigurationException e) {
 			e.printStackTrace();
+		}
+
+		if (c.getInt("config-version") == 1) {
+			c.set("config-version", 2);
+			c.set("notify-updates-on-join", true);
+			try {
+				c.save(fc);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			reloadConfig();
+			logger().info("Updated to the new config!");
+			return;
 		}
 
 		if (c.getInt("config-version") != 1) {
@@ -152,6 +168,7 @@ public class WildRTP extends JavaPlugin {
 						return;
 					}
 
+					update = true;
 					getLogger().info("There is an update avaible for WildRTP!");
 					getLogger().info("https://modrinth.com/plugin/wildrtp");
 

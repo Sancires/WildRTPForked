@@ -7,6 +7,7 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 
+import joni.utils.ColorTranslator;
 import joni.utils.PlayerTeleportManager;
 import joni.wildrtp.WildRTP;
 
@@ -24,6 +25,10 @@ public class OnJoin implements Listener {
 		if (config.getBoolean("auto.onjoin")) {
 			PlayerTeleportManager.teleport(p);
 			return;
+		}
+		if (WildRTP.update && WildRTP.notify && p.isOp()) {
+			p.sendMessage(ColorTranslator.translateColor("[&2WildRTP&f] &6There is an update avaible for WildRTP!"));
+			p.sendMessage(ColorTranslator.translateColor("[&2WildRTP&f] &6https://modrinth.com/plugin/wildrtp"));
 		}
 	}
 

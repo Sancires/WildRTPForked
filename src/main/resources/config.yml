@@ -88,6 +88,8 @@ movetimer:
 # If you want to change the prefix, you can do it here
 prefix: "[§2WildRTP§f] §6"
 
+notify-updates-on-join: true
+
 # If I am allowed to collect anonymous data about your server and this plugin. So I can see how many servers are using this plugin :)
 # Learn more https://bstats.org/
 # And you can see the data aswell here https://bstats.org/plugin/bukkit/WildRTP/17799
