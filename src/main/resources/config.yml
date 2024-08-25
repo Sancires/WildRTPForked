@@ -95,4 +95,4 @@ notify-updates-on-join: true
 # And you can see the data aswell here https://bstats.org/plugin/bukkit/WildRTP/17799
 metrics: true
 
-config-version: 1
+config-version: 2

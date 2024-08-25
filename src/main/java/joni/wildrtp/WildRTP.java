@@ -114,6 +114,10 @@ public class WildRTP extends JavaPlugin {
 			e.printStackTrace();
 		}
 
+		if (c.getInt("config-version") == 2) {
+			return;
+		}
+
 		if (c.getInt("config-version") == 1) {
 			c.set("config-version", 2);
 			c.set("notify-updates-on-join", true);
