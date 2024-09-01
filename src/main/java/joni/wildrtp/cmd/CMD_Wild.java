@@ -59,9 +59,6 @@ public class CMD_Wild implements CommandExecutor {
 			}
 			for (String ww : whitelist) {
 				if (p.getWorld().getName().equals(ww)) {
-					System.out.println(ww);
-					System.out.println(whitelist);
-					System.out.println(p.getWorld().getName());
 				} else {
 					p.sendMessage(ConfigLoader.loadMessageWithPrefix("chat.blacklisted"));
 					return false;
