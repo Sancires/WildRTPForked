@@ -1,5 +1,6 @@
 package joni.listener;
 
+import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -16,7 +17,7 @@ public class OnJoin implements Listener {
 	static FileConfiguration config = WildRTP.getPlugin().getConfig();
 
 	@EventHandler(priority = EventPriority.LOW)
-	public void onMove(PlayerJoinEvent e) {
+	public void onJoin(PlayerJoinEvent e) {
 		Player p = e.getPlayer();
 		if (config.getBoolean("auto.onfirstjoin") && !p.hasPlayedBefore()) {
 			PlayerTeleportManager.teleport(p);
@@ -27,8 +28,17 @@ public class OnJoin implements Listener {
 			return;
 		}
 		if (WildRTP.update && WildRTP.notify && p.isOp()) {
-			p.sendMessage(ColorTranslator.translateColor("[&2WildRTP&f] &6There is an update avaible for WildRTP!"));
-			p.sendMessage(ColorTranslator.translateColor("[&2WildRTP&f] &6https://modrinth.com/plugin/wildrtp"));
+			Bukkit.getScheduler().runTaskLater(WildRTP.getPlugin(), new Runnable() {
+
+				@Override
+				public void run() {
+					p.sendMessage(
+							ColorTranslator.translateColor("[&2WildRTP&f] &6There is an update avaible for WildRTP!"));
+					p.sendMessage(
+							ColorTranslator.translateColor("[&2WildRTP&f] &6https://modrinth.com/plugin/wildrtp"));
+				}
+			}, 20);
+
 		}
 	}
 
