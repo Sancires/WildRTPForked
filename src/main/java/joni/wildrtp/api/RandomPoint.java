@@ -53,11 +53,8 @@ public interface RandomPoint {
 
 		double sideLength = endRadius - startRadius;
 
-		int xDirection = random.nextBoolean() ? 1 : -1;
-		int yDirection = random.nextBoolean() ? 1 : -1;
-
-		int x = originX + xDirection * ((int) (random.nextDouble() * sideLength) + (int) startRadius);
-		int y = originY + yDirection * ((int) (random.nextDouble() * sideLength) + (int) startRadius);
+		int x = originX + (int) (random.nextDouble() * sideLength) + (int) startRadius;
+		int y = originY + (int) (random.nextDouble() * sideLength) + (int) startRadius;
 
 		return new int[] { x, y };
 	}

@@ -46,33 +46,14 @@ public class CMD_Wild implements CommandExecutor {
 			return false;
 
 		List<String> blacklist = config.getStringList("blacklist");
-		List<String> whitelist = config.getStringList("whitelist");
 
-		if (config.getBoolean("whitelist-enabled")) {
-			if (whitelist == null) {
-				p.sendMessage(ConfigLoader.loadMessageWithPrefix("chat.blacklisted"));
-				return false;
-			}
-			if (whitelist.isEmpty()) {
-				p.sendMessage(ConfigLoader.loadMessageWithPrefix("chat.blacklisted"));
-				return false;
-			}
-			for (String ww : whitelist) {
-				if (p.getWorld().getName().equals(ww)) {
-				} else {
+		if (!blacklist.isEmpty())
+			for (String bw : blacklist) {
+				if (p.getWorld().getName().equals(bw)) {
 					p.sendMessage(ConfigLoader.loadMessageWithPrefix("chat.blacklisted"));
 					return false;
 				}
 			}
-		} else {
-			if (!blacklist.isEmpty())
-				for (String bw : blacklist) {
-					if (p.getWorld().getName().equals(bw)) {
-						p.sendMessage(ConfigLoader.loadMessageWithPrefix("chat.blacklisted"));
-						return false;
-					}
-				}
-		}
 
 		Boolean cooldown = false;
 		if (config.getBoolean("cooldown.enabled"))

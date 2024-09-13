@@ -7,6 +7,10 @@
 #
 # by Joni - Thank you for using this plugin
 
+enabled: true
+y: 60
+block: "COBBLESTONE"
+
 # Set the language
 # available [en_EN, de_DE, fr_FR] you can add or edit languages in the plugin folder / lang
 lang: "en_EN"
@@ -33,13 +37,6 @@ auto:
 # Disable worlds, so the player can't execute the command there
 # for example: - world_nether
 blacklist:
-  #- world1
-
-# Whitelist
-# allow teleportation only in whitelisted worlds
-# overrides blacklist
-whitelist-enabled: false
-whitelist:
   #- world1
 
 # Titles
@@ -88,11 +85,7 @@ movetimer:
 # If you want to change the prefix, you can do it here
 prefix: "[§2WildRTP§f] §6"
 
-notify-updates-on-join: true
-
 # If I am allowed to collect anonymous data about your server and this plugin. So I can see how many servers are using this plugin :)
 # Learn more https://bstats.org/
 # And you can see the data aswell here https://bstats.org/plugin/bukkit/WildRTP/17799
 metrics: true
-
-config-version: 2

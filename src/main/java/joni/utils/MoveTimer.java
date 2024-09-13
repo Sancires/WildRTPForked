@@ -9,7 +9,7 @@ import org.bukkit.entity.Player;
 import joni.wildrtp.WildRTP;
 import joni.wildrtp.api.SendInfo;
 
-public class MoveTimer {
+public interface MoveTimer {
 
 	public static ArrayList<UUID> awaitRTP = new ArrayList<UUID>();
 	public static ArrayList<UUID> isCancelled = new ArrayList<UUID>();
@@ -35,7 +35,6 @@ public class MoveTimer {
 					if (isCancelled.contains(u)) {
 						p.sendMessage(ConfigLoader.loadMessageWithPrefix("chat.movetimer.cancelled"));
 						remove(u);
-						CooldownManager.getLastRun().remove(u);
 						return;
 					}
 					p.sendMessage(ConfigLoader.loadMessageWithPrefix("chat.movetimer.remaining").replaceAll("%time%",

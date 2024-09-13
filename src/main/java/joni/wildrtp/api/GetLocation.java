@@ -1,7 +1,10 @@
 package joni.wildrtp.api;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
 import org.bukkit.ChunkSnapshot;
 import org.bukkit.Location;
@@ -9,8 +12,10 @@ import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.World.Environment;
 import org.bukkit.block.data.BlockData;
+import org.bukkit.configuration.file.FileConfiguration;
 
 import io.papermc.lib.PaperLib;
+import joni.wildrtp.WildRTP;
 import joni.wildrtp.api.RandomPoint.Algorithm;
 
 public interface GetLocation {
@@ -76,7 +81,8 @@ public interface GetLocation {
 			}
 
 			if (w.getEnvironment().equals(Environment.NORMAL) && !(loc.getBlock().isLiquid())) {
-				return new SafeLocation(tries, loc);
+				if (loc.getBlock().getType().isSolid())
+					return new SafeLocation(tries, loc);
 			}
 
 			if (w.getEnvironment().equals(Environment.THE_END) && loc.getBlock().getType().equals(Material.END_STONE)) {
@@ -88,10 +94,68 @@ public interface GetLocation {
 			}
 
 			if (tries >= 20) {
-				System.err.println("");
-				return null;
-			}
+				FileConfiguration conf = WildRTP.getPlugin().getConfig();
+				if (!conf.getBoolean("enabled")) {
+					return null;
+				}
 
+				loc.setY(conf.getDouble("y"));
+
+				Location b1 = new Location(w, loc.getX() + 1, loc.getY(), loc.getZ());
+				Location b2 = new Location(w, loc.getX() + 1, loc.getY(), loc.getZ() + 1);
+				Location b3 = new Location(w, loc.getX() + 1, loc.getY(), loc.getZ() - 1);
+				Location b4 = new Location(w, loc.getX(), loc.getY(), loc.getZ() + 1);
+				Location b5 = new Location(w, loc.getX(), loc.getY(), loc.getZ() - 1);
+				Location b6 = new Location(w, loc.getX() - 1, loc.getY(), loc.getZ());
+				Location b7 = new Location(w, loc.getX() - 1, loc.getY(), loc.getZ() + 1);
+				Location b8 = new Location(w, loc.getX() - 1, loc.getY(), loc.getZ() - 1);
+				Location b9 = new Location(w, loc.getX(), loc.getY(), loc.getZ());
+
+				List<Location> locs = new ArrayList<>();
+
+				locs.add(b1);
+				locs.add(b2);
+				locs.add(b3);
+				locs.add(b4);
+				locs.add(b5);
+				locs.add(b6);
+				locs.add(b7);
+				locs.add(b8);
+				locs.add(b9);
+
+				boolean alt_safe = true;
+
+				for (Location l : locs) {
+					if (!l.getBlock().getType().equals(Material.AIR)) {
+						alt_safe = false;
+					}
+				}
+
+				if (alt_safe) {
+					Material m = null;
+					try {
+						m = Material.valueOf(conf.getString("block"));
+					} catch (IllegalArgumentException e) {
+						m = Material.COBBLESTONE;
+					}
+
+					final Material fm = m;
+
+					Bukkit.getScheduler().runTask(WildRTP.getPlugin(), new Runnable() {
+
+						@Override
+						public void run() {
+							for (Location l : locs) {
+								l.getBlock().setType(fm);
+							}
+						}
+					});
+
+				}
+
+				loc.add(0.5, 1, 0.5);
+				return new SafeLocation(tries, loc);
+			}
 		}
 
 		return null;

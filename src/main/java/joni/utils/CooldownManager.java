@@ -90,8 +90,4 @@ public class CooldownManager {
 		config = WildRTP.getPlugin().getConfig();
 	}
 
-	public static HashMap<UUID, Long> getLastRun() {
-		return lastRun;
-	}
-
 }
