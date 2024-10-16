@@ -29,11 +29,17 @@ public class CMD_CustomWild implements CommandExecutor {
 			s.sendMessage(prefix + "<required arguments>");
 			s.sendMessage(prefix + "(optional arguments)");
 			s.sendMessage(prefix
-					+ "Use /customrtp <player> <world> <startRadius> <endRadius> <originX> <originZ> (cooldown true / false) (messages true / false)");
+					+ "Use /customrtp <player / %player%> <world> <startRadius> <endRadius> <originX> <originZ> (cooldown true / false) (messages true / false)");
 			return false;
 		}
 
-		Player p = Bukkit.getPlayer(args[0]);
+		Player p;
+		if (args[0].equals("%player%") && s instanceof Player) {
+			p = (Player) s;
+		} else {
+			p = Bukkit.getPlayer(args[0]);
+		}
+
 		if (p == null) {
 			s.sendMessage(prefix + "The player is not online!");
 			return false;

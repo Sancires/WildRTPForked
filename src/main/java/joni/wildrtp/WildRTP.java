@@ -35,7 +35,7 @@ public class WildRTP extends JavaPlugin {
 
 	public static String name = "WildRTP";
 	public static String author = "Joni";
-	public static String ver = "2.6";
+	public static String ver = "2.6.1";
 	public static Boolean update = false;
 	public static Boolean notify = true;
 
