@@ -27,7 +27,7 @@ teleport:
 auto:
   onfirstjoin: false
   onjoin: false
-  ondeath: false
+  ondeath: false # Only will teleport if player does not have a bed set.
 
 # Blacklist
 # Disable worlds, so the player can't execute the command there

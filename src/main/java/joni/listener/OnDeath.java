@@ -17,7 +17,8 @@ public class OnDeath implements Listener {
 	@EventHandler(priority = EventPriority.LOW)
 	public void onMove(PlayerRespawnEvent e) {
 		Player p = e.getPlayer();
-		if (config.getBoolean("auto.ondeath"))
+		if (config.getBoolean("auto.ondeath") &&
+				(p.getBedSpawnLocation()!= null))
 			new Thread() {
 				public void run() {
 					try {
