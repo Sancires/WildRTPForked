@@ -1,11 +1,7 @@
 package joni.wildrtp;
 
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.URL;
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -13,7 +9,6 @@ import java.util.logging.Logger;
 
 import org.bstats.bukkit.Metrics;
 import org.bukkit.Bukkit;
-import org.bukkit.Server;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -21,7 +16,6 @@ import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import io.papermc.lib.PaperLib;
 import joni.listener.OnDeath;
 import joni.listener.OnJoin;
 import joni.listener.OnMove;
@@ -44,26 +38,11 @@ public class WildRTP extends JavaPlugin {
 		saveDefaultConfig();
 		MessageFile.createConfig();
 		updateConfig();
-		Information(getServer());
 		initEvents();
 		initCommands();
 		metrics();
-		updateChecker();
-
-		notify = getConfig().getBoolean("notify-updates-on-join");
 
 	}
-
-	public void Information(Server s) {
-		getLogger().info("WildRTP by " + author);
-		getLogger().info("Thank you for using my plugin!");
-		if (PaperLib.isSpigot() && !PaperLib.isPaper()) {
-			getLogger().info("===============================");
-			getLogger().info("I strongly recommend paper for better performance!");
-		}
-		PaperLib.suggestPaper(this);
-	}
-
 	public static Plugin getPlugin() {
 		return Bukkit.getPluginManager().getPlugin("WildRTP");
 	}
@@ -111,7 +90,7 @@ public class WildRTP extends JavaPlugin {
 		try {
 			c.load(fc);
 		} catch (IOException | InvalidConfigurationException e) {
-			e.printStackTrace();
+			logger().warning("Error updating config.");
 		}
 
 		if (c.getInt("config-version") == 2) {
@@ -124,7 +103,7 @@ public class WildRTP extends JavaPlugin {
 			try {
 				c.save(fc);
 			} catch (IOException e) {
-				e.printStackTrace();
+				logger().warning("Error updating config.");
 			}
 			reloadConfig();
 			logger().info("Updated to the new config!");
@@ -143,45 +122,12 @@ public class WildRTP extends JavaPlugin {
 			try {
 				c.save(fc);
 			} catch (IOException e) {
-				e.printStackTrace();
+				logger().warning("Error updating config.");
 			}
 			reloadConfig();
 			logger().info("Updated to the new config!");
 		}
 	}
-
-	private void updateChecker() {
-		new Thread() {
-			public void run() {
-				try {
-					StringBuilder content = new StringBuilder();
-
-					URL url = new URL("https://raw.githubusercontent.com/LasaJoniHD/WildRTP/main/this-version.txt");
-					BufferedReader reader = new BufferedReader(
-							new InputStreamReader(url.openStream(), StandardCharsets.UTF_8));
-
-					String line;
-					while ((line = reader.readLine()) != null) {
-						content.append(line);
-					}
-
-					reader.close();
-
-					if (content.toString().equals(ver)) {
-						getLogger().info("You are running the latest version!");
-						return;
-					}
-
-					update = true;
-					getLogger().info("There is an update avaible for WildRTP!");
-					getLogger().info("https://modrinth.com/plugin/wildrtp");
-
-				} catch (IOException e) {
-					getLogger().info("Can't check for updates? Server might be unavailable...");
-				}
-			}
-		}.start();
-
-	}
-
 }
+
+
